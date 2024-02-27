@@ -2,8 +2,6 @@ import { GameEvent } from "@/types";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
-const URL = "http://localhost:3000/api/launches";
-
 const useGameEvents = (year: number | string, month: number | string) => {
   const [gameEvents, setGameEvents] = useState<GameEvent[]>();
   const [gameEventsDateMap, setGameEventsDateMap] = useState<
@@ -14,7 +12,9 @@ const useGameEvents = (year: number | string, month: number | string) => {
   useEffect(() => {
     async function getGameEvents() {
       try {
-        const response = await fetch(`${URL}?month=${month}&year=${year}`);
+        const response = await fetch(
+          `/api/launches?month=${month}&year=${year}`
+        );
         const results: { data: GameEvent[] } = await response.json();
         setGameEvents(results?.data);
         const dateMap = new Map();
